@@ -1,3 +1,5 @@
+import Navbar from "@/components/Navbar"
+
 export default function DashboardLayout({
   children,
 }: {
@@ -6,7 +8,7 @@ export default function DashboardLayout({
   return (
     <div className="">
         <div>
-          <h1 className="text-red-300">Layout</h1>
+          <Navbar />
         <main className="">
           {children}
         </main>

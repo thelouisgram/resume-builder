@@ -21,7 +21,7 @@ const Hero = () => {
                 <nav className="z-50 flex items-center justify-between w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm">
                     <Link href="/">
                         <Image 
-                            src="./assets/logo.svg" 
+                            src="/logo.svg" 
                             alt="Logo" 
                             width={120}
                             height={40}
