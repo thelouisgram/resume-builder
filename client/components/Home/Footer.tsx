@@ -133,7 +133,7 @@ const Footer: React.FC = () => {
       <div className="flex flex-wrap items-start gap-10 md:gap-[60px] xl:gap-[140px]">
         {/* Logo */}
        <Link href="/home">
-        <Image src='../../assets/logo.svg' alt='logo' width={103} height={35} />
+        <Image src='/logo.svg' alt='logo' width={103} height={35} />
        </Link>
 
         {/* Footer Sections */}
