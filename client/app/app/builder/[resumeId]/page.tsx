@@ -1,9 +1,178 @@
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { dummyResumeData } from "@/assets/assets";
+import { Resume } from "@/types/dashboard";
+import Link from "next/link";
+import {
+  ArrowLeft,
+  Briefcase,
+  ChevronLeft,
+  ChevronRight,
+  FileText,
+  Folder,
+  GraduationCap,
+  Sparkles,
+  User,
+} from "lucide-react";
+import PersonalInfo from "@/components/dashboard/PersonalInfo";
 
-const page = () => {
+const Page = () => {
+  const { resumeId } = useParams();
+
+  const [resumeData, setResumeData] = useState<Resume>({
+    _id: "",
+    userId: "",
+    title: "",
+    public: false,
+    personal_info: {
+      full_name: "",
+      email: "",
+      phone: "",
+      location: "",
+      linkedin: "",
+      website: "",
+      profession: "",
+      image: "",
+    },
+    professional_summary: "",
+    skills: [],
+    experience: [],
+    education: [],
+    project: [],
+    template: "classic",
+    accent_color: "#3B8256",
+    updatedAt: "",
+    createdAt: "",
+  });
+
+  const loadExistingData = async () => {
+    const resume = dummyResumeData.find((resume) => resume._id === resumeId);
+    if (resume) {
+      setResumeData({
+        ...resume,
+        personal_info: {
+          ...resume.personal_info,
+          image:
+            typeof resume.personal_info.image === "string"
+              ? resume.personal_info.image
+              : resume.personal_info.image?.src ?? "",
+        },
+      });
+      document.title = resume.title;
+    }
+  };
+
+  const [activeSectionIndex, setActiveSectionIndex] = useState(0);
+  const [removeBackground, setRemoveBackground] = useState(false);
+
+  const sections = [
+    { id: "personal", title: "Personal Info", icon: User },
+    { id: "summary", title: "Summary", icon: FileText },
+    { id: "experience", title: "Experience", icon: Briefcase },
+    { id: "education", title: "Education", icon: GraduationCap },
+    { id: "projects", title: "Projects", icon: Folder },
+    { id: "skills", title: "Skills", icon: Sparkles },
+  ];
+
+  const activeSection = sections[activeSectionIndex];
+
+  useEffect(() => {
+    Promise.resolve().then(() => loadExistingData());
+  }, []);
+
+  const handlePersonalInfoChange = (
+    field: keyof Resume["personal_info"],
+    value: string | File
+  ) => {
+    setResumeData((prev) => ({
+      ...prev,
+      personal_info: {
+        ...prev.personal_info,
+        [field]: value,
+      },
+    }));
+  };
+
   return (
-    <div className='text-blue-300'>resume</div>
-  )
-}
+    <div className="">
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <Link
+          href="/app"
+          className="inline-flex gap-2 items-center text-slate-500 hover:text-slate-700 
+          transition-colors"
+        >
+          <ArrowLeft className="size-4" /> Back to Dashboard
+        </Link>
+      </div>
+      <div className="max-w-7xl mx-auto px-4 pb-8">
+        <div className="grid lg:grid-cols-12 gap-8">
+          {/* Left panel - Form */}
+          <div className="relative lg:col-span-5 rounded-lg overflow-hidden">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 pt-1">
+              {/* Progress bar using activeSectionIndex */}
+              <hr className="absolute top-0 left-0 right-0 border-2 border-gray-200" />
+              <hr
+                className="absolute top-0 left-0 h-1 bg-gradient-to-r from-green-500 to-green-600 
+                border-none transition-all duration-2000"
+                style={{
+                  width: `${activeSectionIndex} * 100 / (section.length - 1)%`,
+                }}
+              />
+              {/* Section navigation */}
+              <div className="flex justify-between items-center mb-6 border-b  border-gray-300 py-1">
+                <div className=""></div>
+                <div className="flex items-center">
+                  {activeSectionIndex !== 0 && (
+                    <button
+                      onClick={() =>
+                        setActiveSectionIndex((prev) => Math.max(prev - 1, 0))
+                      }
+                      className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium
+                      text-gray-600 hover:bg-gray-50 transition-all"
+                      disabled={activeSectionIndex === 0}
+                    >
+                      <ChevronLeft className="size-4" /> Previous
+                    </button>
+                  )}
+                  <button
+                    onClick={() =>
+                      setActiveSectionIndex((prev) =>
+                        Math.max(prev + 1, activeSectionIndex - 1)
+                      )
+                    }
+                    className={`flex items-center gap-1 p-3 rounded-lg text-sm font-medium
+                      text-gray-600 hover:bg-gray-50 transition-all
+                       ${
+                         activeSectionIndex === activeSectionIndex - 1 &&
+                         "opacity-50"
+                       }`}
+                    disabled={activeSectionIndex === activeSectionIndex - 1}
+                  >
+                    Next
+                    <ChevronRight className="size-4" />
+                  </button>
+                </div>
+              </div>
+              {/* Form Content */}
+              <div className="space-y-6">
+                {activeSection.id === "personal" && (
+                  <PersonalInfo
+                    data={resumeData.personal_info}
+                    onChange={handlePersonalInfoChange}
+                    removeBackground={removeBackground}
+                    setRemoveBackground={setRemoveBackground}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+          {/* Right panel - preview */}
+          <div className=""></div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default page
+export default Page;
