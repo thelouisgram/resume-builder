@@ -56,3 +56,8 @@ export interface Resume {
 
 // Array type for multiple resumes
 export type ResumeData = Resume[];
+
+export interface ResumeTemplateProps {
+  data: Resume;
+  accentColor: string;
+}

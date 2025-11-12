@@ -16,6 +16,8 @@ import {
   User,
 } from "lucide-react";
 import PersonalInfo from "@/components/dashboard/PersonalInfo";
+import ResumePreview from "@/components/dashboard/ResumePreview";
+import TemplateSelector from "@/components/dashboard/TemplateSelector";
 
 const Page = () => {
   const { resumeId } = useParams();
@@ -121,7 +123,14 @@ const Page = () => {
               />
               {/* Section navigation */}
               <div className="flex justify-between items-center mb-6 border-b  border-gray-300 py-1">
-                <div className=""></div>
+                <div className="">
+                  <TemplateSelector
+                    selectedTemplate={resumeData.template}
+                    onChange={(template) => {
+                      setResumeData((prev) => ({ ...prev, template }));
+                    }}
+                  />
+                </div>
                 <div className="flex items-center">
                   {activeSectionIndex !== 0 && (
                     <button
@@ -168,7 +177,15 @@ const Page = () => {
             </div>
           </div>
           {/* Right panel - preview */}
-          <div className=""></div>
+          <div className="lg:col-span-7 max-lg:mt-6">
+                <div className="">
+                  {/* - - - buttons - - - */}
+                </div>
+                <div className="">
+                  <ResumePreview data={resumeData} accentColor={resumeData.accent_color} 
+                  template={resumeData.template}/>
+                </div>
+          </div>
         </div>
       </div>
     </div>
