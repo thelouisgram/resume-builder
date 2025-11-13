@@ -18,6 +18,7 @@ import {
 import PersonalInfo from "@/components/dashboard/PersonalInfo";
 import ResumePreview from "@/components/dashboard/ResumePreview";
 import TemplateSelector from "@/components/dashboard/TemplateSelector";
+import ColorPicker from "@/components/dashboard/ColorPicker";
 
 const Page = () => {
   const { resumeId } = useParams();
@@ -115,52 +116,56 @@ const Page = () => {
               {/* Progress bar using activeSectionIndex */}
               <hr className="absolute top-0 left-0 right-0 border-2 border-gray-200" />
               <hr
-                className="absolute top-0 left-0 h-1 bg-gradient-to-r from-green-500 to-green-600 
-                border-none transition-all duration-2000"
+                className="absolute top-0 left-0 h-1 bg-linear-to-r from-green-500 to-green-600 
+                border-none transition-all duration-300"
                 style={{
-                  width: `${activeSectionIndex} * 100 / (section.length - 1)%`,
+                  width: `${
+                    (activeSectionIndex / (sections.length - 1)) * 100
+                  }%`,
                 }}
               />
               {/* Section navigation */}
               <div className="flex justify-between items-center mb-6 border-b  border-gray-300 py-1">
-                <div className="">
+                <div className="flex items-center gap-2">
                   <TemplateSelector
                     selectedTemplate={resumeData.template}
                     onChange={(template) => {
                       setResumeData((prev) => ({ ...prev, template }));
                     }}
                   />
+                  <ColorPicker
+                    selectedColor={resumeData.accent_color}
+                    onChange={(accent_color) => {
+                      setResumeData((prev) => ({ ...prev, accent_color }));
+                    }}
+                  />
                 </div>
                 <div className="flex items-center">
-                  {activeSectionIndex !== 0 && (
+                  {activeSectionIndex > 0 && (
                     <button
                       onClick={() =>
                         setActiveSectionIndex((prev) => Math.max(prev - 1, 0))
                       }
                       className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium
                       text-gray-600 hover:bg-gray-50 transition-all"
-                      disabled={activeSectionIndex === 0}
                     >
                       <ChevronLeft className="size-4" /> Previous
                     </button>
                   )}
-                  <button
-                    onClick={() =>
-                      setActiveSectionIndex((prev) =>
-                        Math.max(prev + 1, activeSectionIndex - 1)
-                      )
-                    }
-                    className={`flex items-center gap-1 p-3 rounded-lg text-sm font-medium
-                      text-gray-600 hover:bg-gray-50 transition-all
-                       ${
-                         activeSectionIndex === activeSectionIndex - 1 &&
-                         "opacity-50"
-                       }`}
-                    disabled={activeSectionIndex === activeSectionIndex - 1}
-                  >
-                    Next
-                    <ChevronRight className="size-4" />
-                  </button>
+                  {activeSectionIndex < sections.length - 1 && (
+                    <button
+                      onClick={() =>
+                        setActiveSectionIndex((prev) =>
+                          Math.min(prev + 1, sections.length - 1)
+                        )
+                      }
+                      className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium
+    text-gray-600 hover:bg-gray-50 transition-all"
+                    >
+                      Next
+                      <ChevronRight className="size-4" />
+                    </button>
+                  )}
                 </div>
               </div>
               {/* Form Content */}
@@ -178,13 +183,14 @@ const Page = () => {
           </div>
           {/* Right panel - preview */}
           <div className="lg:col-span-7 max-lg:mt-6">
-                <div className="">
-                  {/* - - - buttons - - - */}
-                </div>
-                <div className="">
-                  <ResumePreview data={resumeData} accentColor={resumeData.accent_color} 
-                  template={resumeData.template}/>
-                </div>
+            <div className="">{/* - - - buttons - - - */}</div>
+            <div className="">
+              <ResumePreview
+                data={resumeData}
+                accentColor={resumeData.accent_color}
+                template={resumeData.template}
+              />
+            </div>
           </div>
         </div>
       </div>
