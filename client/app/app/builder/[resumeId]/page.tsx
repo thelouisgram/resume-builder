@@ -19,6 +19,7 @@ import PersonalInfo from "@/components/dashboard/PersonalInfo";
 import ResumePreview from "@/components/dashboard/ResumePreview";
 import TemplateSelector from "@/components/dashboard/TemplateSelector";
 import ColorPicker from "@/components/dashboard/ColorPicker";
+import ProfessionalSummary from "@/components/dashboard/ProfessionalSummary";
 
 const Page = () => {
   const { resumeId } = useParams();
@@ -84,14 +85,19 @@ const Page = () => {
     Promise.resolve().then(() => loadExistingData());
   }, []);
 
-  const handlePersonalInfoChange = (
-    field: keyof Resume["personal_info"],
+  type ObjectKeys<T> = {
+    [K in keyof T]: T[K] extends object ? K : never;
+  }[keyof T];
+
+  const handleChange = <T extends ObjectKeys<Resume>>(
+    section: T,
+    field: keyof Resume[T],
     value: string | File
   ) => {
     setResumeData((prev) => ({
       ...prev,
-      personal_info: {
-        ...prev.personal_info,
+      [section]: {
+        ...(prev[section] as object),
         [field]: value,
       },
     }));
@@ -173,9 +179,20 @@ const Page = () => {
                 {activeSection.id === "personal" && (
                   <PersonalInfo
                     data={resumeData.personal_info}
-                    onChange={handlePersonalInfoChange}
+                    onChange={(field, value) =>
+                      handleChange("personal_info", field, value)
+                    }
                     removeBackground={removeBackground}
                     setRemoveBackground={setRemoveBackground}
+                  />
+                )}
+                {activeSection.id === "summary" && (
+                  <ProfessionalSummary
+                    data={resumeData.professional_summary}
+                    onChange={(value:string) =>setResumeData((prev) => ({
+                      ...prev,
+                      professional_summary: value as string,
+                    }))}
                   />
                 )}
               </div>
