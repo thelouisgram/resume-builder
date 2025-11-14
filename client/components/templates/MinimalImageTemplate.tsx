@@ -31,7 +31,7 @@ const MinimalImageTemplate: React.FC<ResumeTemplateProps> = ({
                 alt="Profile"
                 width={128}
                 height={128}
-                className="object-cover rounded-full mx-auto"
+                className="object-cover rounded-full mx-auto aspect-square"
                 style={{ background: accentColor + "70" }}
               />
             </div>
@@ -43,7 +43,7 @@ const MinimalImageTemplate: React.FC<ResumeTemplateProps> = ({
                 alt="Profile"
                 width={128}
                 height={128}
-                className="object-cover rounded-full mx-auto"
+                className="object-cover rounded-full mx-auto aspect-square"
               />
             </div>
           ) : null}
