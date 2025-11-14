@@ -1,15 +1,15 @@
 import React from "react";
-import { Experience } from "@/types/dashboard";
+import { ExperienceProps } from "@/types/dashboard";
 import { Briefcase, Plus, Sparkles, Trash2 } from "lucide-react";
 
 interface ExperienceForm {
-  data: Experience[];
-  onChange: (value: Experience[]) => void;
+  data: ExperienceProps[];
+  onChange: (value: ExperienceProps[]) => void;
 }
 
-const ExperienceForm: React.FC<ExperienceForm> = ({ data, onChange }) => {
+const Experience: React.FC<ExperienceForm> = ({ data, onChange }) => {
   const addExperience = () => {
-    const newExperience: Experience = {
+    const newExperience: ExperienceProps = {
       company: "",
       position: "",
       start_date: "",
@@ -176,4 +176,4 @@ const ExperienceForm: React.FC<ExperienceForm> = ({ data, onChange }) => {
   );
 };
 
-export default ExperienceForm;
+export default Experience;

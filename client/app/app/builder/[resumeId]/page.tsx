@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { dummyResumeData } from "@/assets/assets";
-import { Resume, Experience } from "@/types/dashboard";
+import { Resume, ExperienceProps, ProjectProps, EducationProps } from "@/types/dashboard";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -20,7 +20,9 @@ import ResumePreview from "@/components/dashboard/ResumePreview";
 import TemplateSelector from "@/components/dashboard/TemplateSelector";
 import ColorPicker from "@/components/dashboard/ColorPicker";
 import ProfessionalSummary from "@/components/dashboard/ProfessionalSummary";
-import ExperienceForm from "@/components/dashboard/ExperienceForm";
+import Experience from "@/components/dashboard/Experience";
+import Project from "@/components/dashboard/Project";
+import Education from "@/components/dashboard/Education";
 
 const Page = () => {
   const { resumeId } = useParams();
@@ -167,7 +169,7 @@ const Page = () => {
                         )
                       }
                       className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium
-    text-gray-600 hover:bg-gray-50 transition-all"
+                    text-gray-600 hover:bg-gray-50 transition-all"
                     >
                       Next
                       <ChevronRight className="size-4" />
@@ -199,12 +201,34 @@ const Page = () => {
                   />
                 )}
                 {activeSection.id === "experience" && (
-                  <ExperienceForm
+                  <Experience
                     data={resumeData.experience}
-                    onChange={(value: Experience[]) =>
+                    onChange={(value: ExperienceProps[]) =>
                       setResumeData((prev) => ({
                         ...prev,
                         experience: value,
+                      }))
+                    }
+                  />
+                )}
+                {activeSection.id === "education" && (
+                  <Education
+                    data={resumeData.education}
+                    onChange={(value: EducationProps[]) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        education: value,
+                      }))
+                    }
+                  />
+                )}
+                {activeSection.id === "projects" && (
+                  <Project
+                    data={resumeData.project}
+                    onChange={(value: ProjectProps[]) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        project: value,
                       }))
                     }
                   />

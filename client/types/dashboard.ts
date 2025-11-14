@@ -10,7 +10,7 @@ export interface PersonalInfoProps {
   image: string; // or StaticImageData if using Next.js Image
 }
 
-export interface Experience {
+export interface ExperienceProps {
   company: string;
   position: string;
   start_date: string; 
@@ -19,8 +19,7 @@ export interface Experience {
   is_current: boolean;
 }
 
-export interface Education {
-  _id: string;
+export interface EducationProps {
   institution: string;
   degree: string;
   field: string;
@@ -28,8 +27,7 @@ export interface Education {
   gpa: string; // Can be empty string
 }
 
-export interface Project {
-  _id: string;
+export interface ProjectProps {
   name: string;
   type: string;
   description: string;
@@ -44,9 +42,9 @@ export interface Resume {
   personal_info: PersonalInfoProps;
   professional_summary: string;
   skills: string[];
-  experience: Experience[];
-  education: Education[];
-  project: Project[];
+  experience: ExperienceProps[];
+  education: EducationProps[];
+  project: ProjectProps[];
   template: string;
   accent_color: string;
   updatedAt: string; // ISO 8601 date string
