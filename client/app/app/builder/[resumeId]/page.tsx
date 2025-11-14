@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { dummyResumeData } from "@/assets/assets";
-import { Resume } from "@/types/dashboard";
+import { Resume, Experience } from "@/types/dashboard";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -20,6 +20,7 @@ import ResumePreview from "@/components/dashboard/ResumePreview";
 import TemplateSelector from "@/components/dashboard/TemplateSelector";
 import ColorPicker from "@/components/dashboard/ColorPicker";
 import ProfessionalSummary from "@/components/dashboard/ProfessionalSummary";
+import ExperienceForm from "@/components/dashboard/ExperienceForm";
 
 const Page = () => {
   const { resumeId } = useParams();
@@ -189,10 +190,23 @@ const Page = () => {
                 {activeSection.id === "summary" && (
                   <ProfessionalSummary
                     data={resumeData.professional_summary}
-                    onChange={(value:string) =>setResumeData((prev) => ({
-                      ...prev,
-                      professional_summary: value as string,
-                    }))}
+                    onChange={(value: string) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        professional_summary: value as string,
+                      }))
+                    }
+                  />
+                )}
+                {activeSection.id === "experience" && (
+                  <ExperienceForm
+                    data={resumeData.experience}
+                    onChange={(value: Experience[]) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        experience: value,
+                      }))
+                    }
                   />
                 )}
               </div>

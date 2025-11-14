@@ -5,16 +5,18 @@ const ModernTemplate: React.FC<ResumeTemplateProps> = ({
   data,
   accentColor,
 }) => {
-  const formatDate = (dateStr: string): string => {
+  const formatDate = (dateStr?: string): string => {
     if (!dateStr) return "";
-    const [year, month] = dateStr.split("-");
-    return new Date(parseInt(year), parseInt(month) - 1).toLocaleDateString(
-      "en-US",
-      {
-        year: "numeric",
-        month: "short",
-      }
-    );
+    const parts = dateStr.split("-");
+    if (parts.length < 2) return "";
+    const [year, month] = parts;
+    const y = parseInt(year);
+    const m = parseInt(month) - 1;
+    if (isNaN(y) || isNaN(m)) return "";
+    return new Date(y, m).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+    });
   };
 
   return (
@@ -28,7 +30,7 @@ const ModernTemplate: React.FC<ResumeTemplateProps> = ({
           {data.personal_info?.full_name || "Your Name"}
         </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
           {data.personal_info?.email && (
             <div className="flex items-center gap-2">
               <Mail className="size-4" />
@@ -50,6 +52,7 @@ const ModernTemplate: React.FC<ResumeTemplateProps> = ({
           {data.personal_info?.linkedin && (
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href={data.personal_info?.linkedin}
               className="flex items-center gap-2"
             >
@@ -64,6 +67,7 @@ const ModernTemplate: React.FC<ResumeTemplateProps> = ({
           {data.personal_info?.website && (
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href={data.personal_info?.website}
               className="flex items-center gap-2"
             >
@@ -85,7 +89,7 @@ const ModernTemplate: React.FC<ResumeTemplateProps> = ({
             <h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
               Professional Summary
             </h2>
-            <p className="text-gray-700 ">{data.professional_summary}</p>
+            <p className="text-gray-700">{data.professional_summary}</p>
           </section>
         )}
 
@@ -102,6 +106,12 @@ const ModernTemplate: React.FC<ResumeTemplateProps> = ({
                   key={index}
                   className="relative pl-6 border-l border-gray-200"
                 >
+                  {/* Timeline bullet */}
+                  <span
+                    className="absolute -left-[7px] top-0 w-3 h-3 rounded-full"
+                    style={{ backgroundColor: accentColor }}
+                  ></span>
+
                   <div className="flex justify-between items-start mb-2">
                     <div>
                       <h3 className="text-xl font-medium text-gray-900">
@@ -139,8 +149,13 @@ const ModernTemplate: React.FC<ResumeTemplateProps> = ({
                 <div
                   key={index}
                   className="relative pl-6 border-l border-gray-200"
-                  style={{ borderLeftColor: accentColor }}
                 >
+                  {/* Timeline bullet */}
+                  <span
+                    className="absolute -left-[7px] top-0 w-3 h-3 rounded-full"
+                    style={{ backgroundColor: accentColor }}
+                  ></span>
+
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="text-lg font-medium text-gray-900">

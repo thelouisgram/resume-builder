@@ -11,11 +11,10 @@ export interface PersonalInfoProps {
 }
 
 export interface Experience {
-  _id: string;
   company: string;
   position: string;
-  start_date: string; // Format: "YYYY-MM"
-  end_date: string; // "Present" or "YYYY-MM"
+  start_date: string; 
+  end_date: string; 
   description: string;
   is_current: boolean;
 }
