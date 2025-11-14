@@ -1,16 +1,16 @@
 "use client";
 import React from "react";
-import { EducationProps } from "@/types/dashboard";
+import { Education } from "@/types/dashboard";
 import { GraduationCap, Plus, Trash2 } from "lucide-react";
 
 interface EducationFormProps {
-  data: EducationProps[];
-  onChange: (value: EducationProps[]) => void;
+  data: Education[];
+  onChange: (value: Education[]) => void;
 }
 
 const EducationForm: React.FC<EducationFormProps> = ({ data, onChange }) => {
   const addEducation = () => {
-    const newEducation: EducationProps = {
+    const newEducation: Education = {
       institution: "",
       degree: "",
       field: "",
@@ -27,7 +27,7 @@ const EducationForm: React.FC<EducationFormProps> = ({ data, onChange }) => {
 
   const updateEducation = (
     index: number,
-    field: keyof EducationProps,
+    field: keyof Education,
     value: string
   ) => {
     const updated = [...data];

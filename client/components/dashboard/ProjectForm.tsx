@@ -1,16 +1,16 @@
 "use client";
 import React from "react";
-import { ProjectProps } from "@/types/dashboard";
+import { Project } from "@/types/dashboard";
 import { Folder, Plus, Trash2 } from "lucide-react";
 
 interface ProjectFormProps {
-  data: ProjectProps[];
-  onChange: (value: ProjectProps[]) => void;
+  data: Project[];
+  onChange: (value: Project[]) => void;
 }
 
-const Project: React.FC<ProjectFormProps> = ({ data, onChange }) => {
+const ProjectForm: React.FC<ProjectFormProps> = ({ data, onChange }) => {
   const addProject = () => {
-    const newProject: ProjectProps = {
+    const newProject: Project = {
       name: "",
       type: "",
       description: "",
@@ -25,7 +25,7 @@ const Project: React.FC<ProjectFormProps> = ({ data, onChange }) => {
 
   const updateProject = (
     index: number,
-    field: keyof ProjectProps,
+    field: keyof Project,
     value: string
   ) => {
     const updated = [...data];
@@ -126,4 +126,4 @@ const Project: React.FC<ProjectFormProps> = ({ data, onChange }) => {
   );
 };
 
-export default Project;
+export default ProjectForm;

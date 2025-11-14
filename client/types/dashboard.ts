@@ -1,5 +1,5 @@
 // Base Types
-export interface PersonalInfoProps {
+export interface PersonalInfo {
   full_name: string;
   email: string;
   phone: string;
@@ -10,7 +10,7 @@ export interface PersonalInfoProps {
   image: string; // or StaticImageData if using Next.js Image
 }
 
-export interface ExperienceProps {
+export interface Experience {
   company: string;
   position: string;
   start_date: string; 
@@ -19,7 +19,7 @@ export interface ExperienceProps {
   is_current: boolean;
 }
 
-export interface EducationProps {
+export interface Education {
   institution: string;
   degree: string;
   field: string;
@@ -27,7 +27,7 @@ export interface EducationProps {
   gpa: string; // Can be empty string
 }
 
-export interface ProjectProps {
+export interface Project {
   name: string;
   type: string;
   description: string;
@@ -39,12 +39,12 @@ export interface Resume {
   userId: string;
   title: string;
   public: boolean;
-  personal_info: PersonalInfoProps;
+  personal_info: PersonalInfo;
   professional_summary: string;
   skills: string[];
-  experience: ExperienceProps[];
-  education: EducationProps[];
-  project: ProjectProps[];
+  experience: Experience[];
+  education: Education[];
+  project: Project[];
   template: string;
   accent_color: string;
   updatedAt: string; // ISO 8601 date string

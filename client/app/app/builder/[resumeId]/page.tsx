@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { dummyResumeData } from "@/assets/assets";
-import { Resume, ExperienceProps, ProjectProps, EducationProps } from "@/types/dashboard";
+import { Resume, Experience, Project, Education } from "@/types/dashboard";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -15,14 +15,15 @@ import {
   Sparkles,
   User,
 } from "lucide-react";
-import PersonalInfo from "@/components/dashboard/PersonalInfo";
+import PersonalInfoForm from "@/components/dashboard/PersonalInfoForm";
 import ResumePreview from "@/components/dashboard/ResumePreview";
 import TemplateSelector from "@/components/dashboard/TemplateSelector";
 import ColorPicker from "@/components/dashboard/ColorPicker";
-import ProfessionalSummary from "@/components/dashboard/ProfessionalSummary";
-import Experience from "@/components/dashboard/Experience";
-import Project from "@/components/dashboard/Project";
-import Education from "@/components/dashboard/Education";
+import ProfessionalSummaryForm from "@/components/dashboard/ProfessionalSummaryForm";
+import ExperienceForm from "@/components/dashboard/ExperienceForm";
+import ProjectForm from "@/components/dashboard/ProjectForm";
+import EducationForm from "@/components/dashboard/EducationForm";
+import SkillsForm from "@/components/dashboard/SkillsForm";
 
 const Page = () => {
   const { resumeId } = useParams();
@@ -180,7 +181,7 @@ const Page = () => {
               {/* Form Content */}
               <div className="space-y-6">
                 {activeSection.id === "personal" && (
-                  <PersonalInfo
+                  <PersonalInfoForm
                     data={resumeData.personal_info}
                     onChange={(field, value) =>
                       handleChange("personal_info", field, value)
@@ -190,7 +191,7 @@ const Page = () => {
                   />
                 )}
                 {activeSection.id === "summary" && (
-                  <ProfessionalSummary
+                  <ProfessionalSummaryForm
                     data={resumeData.professional_summary}
                     onChange={(value: string) =>
                       setResumeData((prev) => ({
@@ -201,9 +202,9 @@ const Page = () => {
                   />
                 )}
                 {activeSection.id === "experience" && (
-                  <Experience
+                  <ExperienceForm
                     data={resumeData.experience}
-                    onChange={(value: ExperienceProps[]) =>
+                    onChange={(value: Experience[]) =>
                       setResumeData((prev) => ({
                         ...prev,
                         experience: value,
@@ -212,9 +213,9 @@ const Page = () => {
                   />
                 )}
                 {activeSection.id === "education" && (
-                  <Education
+                  <EducationForm
                     data={resumeData.education}
-                    onChange={(value: EducationProps[]) =>
+                    onChange={(value: Education[]) =>
                       setResumeData((prev) => ({
                         ...prev,
                         education: value,
@@ -223,9 +224,9 @@ const Page = () => {
                   />
                 )}
                 {activeSection.id === "projects" && (
-                  <Project
+                  <ProjectForm
                     data={resumeData.project}
-                    onChange={(value: ProjectProps[]) =>
+                    onChange={(value: Project[]) =>
                       setResumeData((prev) => ({
                         ...prev,
                         project: value,
@@ -233,7 +234,22 @@ const Page = () => {
                     }
                   />
                 )}
+                {activeSection.id === "skills" && (
+                  <SkillsForm
+                    data={resumeData.skills}
+                    onChange={(value: string[]) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        skills: value, 
+                      }))
+                    }
+                  />
+                )}
               </div>
+              <button className="bg-linear-to-br from-green-100 to-green-200 ring-green-300
+              text-green-600 ring hover:ring-green-400 rounded-md transition-all px-6 py-2 mt-6 text-sm">
+                Save changes
+              </button>
             </div>
           </div>
           {/* Right panel - preview */}

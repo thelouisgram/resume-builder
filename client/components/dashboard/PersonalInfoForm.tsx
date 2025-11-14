@@ -1,30 +1,30 @@
 import { BriefcaseBusiness, Globe, Linkedin, Mail, MapPin, Phone, User } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import { PersonalInfoProps } from "@/types/dashboard";
+import { PersonalInfo } from "@/types/dashboard";
 
-interface PersonalInfo {
-  data: PersonalInfoProps;
-  onChange: (field: keyof PersonalInfoProps, value: string | File) => void;
+interface PersonalInfoForm {
+  data: PersonalInfo;
+  onChange: (field: keyof PersonalInfo, value: string | File) => void;
   removeBackground: boolean;
   setRemoveBackground: (value: boolean) => void;
 }
 
-const PersonalInfo: React.FC<PersonalInfo> = ({
+const PersonalInfoForm: React.FC<PersonalInfoForm> = ({
   data,
   onChange,
   removeBackground,
   setRemoveBackground,
 }) => {
   const handleChange = (
-    field: keyof PersonalInfoProps,
+    field: keyof PersonalInfo,
     value: string | File
   ) => {
     onChange(field, value);
   };
 
   const fields: {
-    key: keyof PersonalInfoProps;
+    key: keyof PersonalInfo;
     label: string;
     type: string;
     icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -133,4 +133,4 @@ const PersonalInfo: React.FC<PersonalInfo> = ({
   );
 };
 
-export default PersonalInfo;
+export default PersonalInfoForm;

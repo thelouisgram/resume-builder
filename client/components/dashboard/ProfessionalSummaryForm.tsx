@@ -6,7 +6,7 @@ interface ProfessionalSummaryProps {
   onChange: (value: string) => void;
 }
 
-const ProfessionalSummary: React.FC<ProfessionalSummaryProps> = ({
+const ProfessionalSummaryForm: React.FC<ProfessionalSummaryProps> = ({
   onChange,
   data,
 }) => {
@@ -18,7 +18,7 @@ const ProfessionalSummary: React.FC<ProfessionalSummaryProps> = ({
             Professional Summary
           </h3>
           <p className="text-sm text-gray-600">
-            Add summary for your resume here
+            Add summary for your resume here.
           </p>
         </div>
         <button
@@ -42,12 +42,12 @@ const ProfessionalSummary: React.FC<ProfessionalSummaryProps> = ({
           placeholder="Write a compelling summary that highlights your key strengths and career objectives..."
         />
         <p className="text-xs text-gray-500 max-w-4/5 mx-auto text-center">
-          Tip: Keep it concise (3-4 sentences) and focus on your most relevant
-          achievements and skills
+          <strong>Tip: </strong>Keep it concise (3-4 sentences) and focus on your most relevant
+          achievements and skills.
         </p>
       </div>
     </div>
   );
 };
 
-export default ProfessionalSummary;
+export default ProfessionalSummaryForm;
