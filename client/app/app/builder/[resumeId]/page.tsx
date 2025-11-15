@@ -9,9 +9,13 @@ import {
   Briefcase,
   ChevronLeft,
   ChevronRight,
+  Download,
+  EyeIcon,
+  EyeOff,
   FileText,
   Folder,
   GraduationCap,
+  Share2Icon,
   Sparkles,
   User,
 } from "lucide-react";
@@ -24,6 +28,7 @@ import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import ProjectForm from "@/components/dashboard/ProjectForm";
 import EducationForm from "@/components/dashboard/EducationForm";
 import SkillsForm from "@/components/dashboard/SkillsForm";
+import { resume } from "react-dom/server";
 
 const Page = () => {
   const { resumeId } = useParams();
@@ -106,6 +111,25 @@ const Page = () => {
       },
     }));
   };
+
+  const changeResumeVisibility = async () => {
+    setResumeData({ ...resumeData, public: !resumeData.public });
+  };
+
+  const handleShare = async () => {
+    const frontendUrl = window.location.href.split("./app")[0];
+    const resumeUrl = frontendUrl + "./view/" + resumeId;
+
+    if (navigator.share) {
+      navigator.share({ url: resumeUrl, text: "My Resume" });
+    } else {
+      alert("Share not supported on this browser");
+    }
+  };
+
+  const downloadResume = () =>{
+    window.print()
+  }
 
   return (
     <div className="">
@@ -240,21 +264,55 @@ const Page = () => {
                     onChange={(value: string[]) =>
                       setResumeData((prev) => ({
                         ...prev,
-                        skills: value, 
+                        skills: value,
                       }))
                     }
                   />
                 )}
               </div>
-              <button className="bg-linear-to-br from-green-100 to-green-200 ring-green-300
-              text-green-600 ring hover:ring-green-400 rounded-md transition-all px-6 py-2 mt-6 text-sm">
+              <button
+                className="bg-linear-to-br from-green-100 to-green-200 ring-green-300
+              text-green-600 ring hover:ring-green-400 rounded-md transition-all px-6 py-2 mt-6 text-sm"
+              >
                 Save changes
               </button>
             </div>
           </div>
           {/* Right panel - preview */}
           <div className="lg:col-span-7 max-lg:mt-6">
-            <div className="">{/* - - - buttons - - - */}</div>
+            <div className="w-full relative">
+              <div className="absolute bottom-3 right-0 left-0 flex items-center justify-end gap-2">
+                {resumeData.public && (
+                  <button
+                  onClick={handleShare}
+                    className="flex items-center p-2 px-4 gap-2 text-xs  bg-linear-to-br
+                  text-blue-600 rounded-lg ring-blue-300 hover:ring transition-colors from-blue-100 to-blue-200"
+                  >
+                    <Share2Icon className="size-4" /> Share
+                  </button>
+                )}
+                <button
+                  onClick={changeResumeVisibility}
+                  className="flex items-center p-2 px-4 gap-2 text-xs  bg-linear-to-br
+                  text-purple-600 rounded-lg ring-purple-300 hover:ring transition-colors from-purple-100 to-purple-200"
+                >
+                  {resumeData.public ? (
+                    <EyeIcon className="size-4" />
+                  ) : (
+                    <EyeOff className="size-4" />
+                  )}
+                  {resumeData.public ? "Public" : "Private"}
+                </button>
+                <button
+                onClick={downloadResume}
+                  className="flex items-center p-2 px-4 gap-2 text-xs  bg-linear-to-br
+                  text-green-600 rounded-lg ring-green-300 hover:ring transition-colors from-green-100 to-green-200"
+                >
+                  <Download className="size-4" />
+                  Download
+                </button>
+              </div>
+            </div>
             <div className="">
               <ResumePreview
                 data={resumeData}
