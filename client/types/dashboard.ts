@@ -1,3 +1,5 @@
+import type { StaticImageData } from "next/image";
+
 // Base Types
 export interface PersonalInfo {
   full_name: string;
@@ -7,7 +9,7 @@ export interface PersonalInfo {
   linkedin: string;
   website: string;
   profession: string;
-  image: string; // or StaticImageData if using Next.js Image
+  image: string | StaticImageData; // or StaticImageData if using Next.js Image
 }
 
 export interface Experience {

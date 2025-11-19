@@ -28,7 +28,7 @@ import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import ProjectForm from "@/components/dashboard/ProjectForm";
 import EducationForm from "@/components/dashboard/EducationForm";
 import SkillsForm from "@/components/dashboard/SkillsForm";
-import { resume } from "react-dom/server";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const { resumeId } = useParams();
@@ -58,6 +58,10 @@ const Page = () => {
     updatedAt: "",
     createdAt: "",
   });
+
+
+  const route = useRouter()
+
 
   const loadExistingData = async () => {
     const resume = dummyResumeData.find((resume) => resume._id === resumeId);
@@ -118,7 +122,7 @@ const Page = () => {
 
   const handleShare = async () => {
     const origin = window.location.origin; 
-  const resumeUrl = `${origin}/view/${resumeId}`;
+  const resumeUrl = `${origin}/preview/${resumeId}`;
 
     if (navigator.share) {
       navigator.share({ url: resumeUrl, text: "My Resume" });
