@@ -132,7 +132,7 @@ const Page = () => {
   };
 
   const downloadResume = () =>{
-    window.print()
+    route.push(`preview/${resumeId}`)
   }
 
   return (
